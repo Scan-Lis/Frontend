@@ -1,5 +1,6 @@
 import WrapperInput from "@/components/wrapper-input";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
+import LoginForm from "./login-form";
 
 const LoginModule = () => {
   return (
@@ -8,23 +9,7 @@ const LoginModule = () => {
         <figure className="w-[7rem] mb-4">
           <img className="w-full" src="./assets/logo-lis.png" alt="Logo LIS" />
         </figure>
-        <form
-          method="post"
-          className="flex flex-col gap-8 w-[60%] max-w-96 items-center">
-          <h2 className="font-extrabold text-4xl text-dark-blue">
-            Iniciar Sesión
-          </h2>
-          <WrapperInput label="Usuario">
-            <input className="input" placeholder="john.doe" type="text" />
-          </WrapperInput>
-          <WrapperInput label="Contraseña">
-            <input className="input" placeholder="******" type="password" />
-          </WrapperInput>
-          <button className="flex gap-2 text-white font-semibold bg-dark-blue w-full justify-center items-center rounded-lg p-3">
-            Iniciar
-            <PaperAirplaneIcon className="w-6 h-6 " />
-          </button>
-        </form>
+        <LoginForm />
       </section>
       <aside className={"relative flex-1 clip-path bg-gradient-linear"}>
         <div className={"pattern"}>
