@@ -1,5 +1,6 @@
+import Spinner from "@/components/spinner";
 import WrapperInput from "@/components/wrapper-input";
-import { LoginFields } from "@/types";
+import { LoginFields } from "@/types/types";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -17,8 +18,10 @@ const LoginForm = () => {
 
   const router = useRouter();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onSubmitForm = async (data: LoginFields) => {
+    setLoading(true);
     console.log(data);
 
     const res = await signIn("credentials", {
@@ -27,9 +30,11 @@ const LoginForm = () => {
     });
 
     if (!res?.ok) {
+      setLoading(false);
       setError("Usuario o contraseña incorrectos");
       return;
     }
+    setLoading(false);
     router.push("/dashboard");
   };
 
@@ -88,6 +93,12 @@ const LoginForm = () => {
         </button>
         {error && (
           <p className="text-red-500 text-xs -mt-2 font-semibold">{error}</p>
+        )}
+        {loading && (
+          <div className="font-semibold text-dark-blue flex gap-2 items-center">
+            <Spinner width="w-6 h-6" />
+            Cargando...
+          </div>
         )}
       </section>
     </form>
