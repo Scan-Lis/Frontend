@@ -32,29 +32,20 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // if (user) {
-      //   return {
-      //     ...token,
-      //     jwt: user.jwt,
-      //   };
-      // }
-      // return token;
-
       return { ...token, ...user };
     },
     async session({ session, token }) {
       if (token) {
-        const decoded = jwtDecode<{ rol: string; email: string }>(
+        const decoded = jwtDecode<{ rol: string; sub: string }>(
           token.token as string
         );
         session.jwt = token.token as string;
         session.user.rol = decoded.rol;
-        session.user.email = decoded.email;
-        console.log("Session", session);
+        session.user.email = decoded.sub;
+        console.log("Session --> ", session);
+        console.log("Decode --> ", decoded);
       }
       return session;
-      // session.user = token as any;
-      // return session;
     },
   },
   pages: {
