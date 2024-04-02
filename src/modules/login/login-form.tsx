@@ -1,6 +1,9 @@
 import WrapperInput from "@/components/wrapper-input";
 import { LoginFields } from "@/types";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const LoginForm = () => {
@@ -12,15 +15,27 @@ const LoginForm = () => {
     mode: "onChange",
   });
 
-  const onSubmitForm = handleSubmit((data) => {
-    console.log(data);
-  });
+  const router = useRouter();
+  const [error, setError] = useState("");
 
-  console.log(formState.errors);
+  const onSubmitForm = async (data: LoginFields) => {
+    console.log(data);
+
+    const res = await signIn("credentials", {
+      ...data,
+      redirect: false,
+    });
+
+    if (!res?.ok) {
+      setError("Usuario o contraseña incorrectos");
+      return;
+    }
+    router.push("/dashboard");
+  };
 
   return (
     <form
-      onSubmit={onSubmitForm}
+      onSubmit={handleSubmit(onSubmitForm)}
       method="post"
       className="flex flex-col gap-8 w-[60%] max-w-96 items-center">
       <h2 className="font-extrabold text-4xl text-dark-blue">Iniciar Sesión</h2>
@@ -71,6 +86,9 @@ const LoginForm = () => {
           Iniciar
           <PaperAirplaneIcon className="w-6 h-6 " />
         </button>
+        {error && (
+          <p className="text-red-500 text-xs -mt-2 font-semibold">{error}</p>
+        )}
       </section>
     </form>
   );

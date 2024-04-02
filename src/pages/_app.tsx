@@ -1,3 +1,4 @@
+import SessionAuthProvider from "@/context/SessionAuthProvider";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Urbanist } from "next/font/google";
@@ -10,7 +11,9 @@ const urbanist = Urbanist({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={`${urbanist.className} w-full h-full`}>
-      <Component {...pageProps} />
+      <SessionAuthProvider>
+        <Component {...pageProps} />
+      </SessionAuthProvider>
     </main>
   );
 }

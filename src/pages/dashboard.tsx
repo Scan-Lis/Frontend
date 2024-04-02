@@ -1,7 +1,19 @@
 import Layout from "@/components/layout";
+import { useSession } from "next-auth/react";
 
 const Dashboard = () => {
-  return <Layout>Dashboard</Layout>;
+  const { data: session, status } = useSession();
+
+  console.log(session?.user.token);
+
+  return (
+    <Layout>
+      <h1>Dashboard</h1>
+      <pre>
+        <code>{JSON.stringify(session, null, 2)}</code>
+      </pre>
+    </Layout>
+  );
 };
 
 export default Dashboard;

@@ -1,3 +1,12 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 export default function Home() {
-  return <h1>Scan-Lis</h1>;
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/login");
+  }, []);
+
+  return <main></main>;
 }

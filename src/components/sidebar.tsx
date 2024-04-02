@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const Sidebar = () => {
   const [isClose, setIsClose] = useState<boolean>(false);
@@ -67,12 +68,12 @@ const Sidebar = () => {
             <span className={classes.labelItem}>Problemas</span>
           </Link>
         </div>
-        <Link
+        <button
           className="flex gap-2 items-center px-4 py-3 bg-light-blue text-ultra-dark-blue rounded-lg"
-          href={""}>
+          onClick={() => signIn()}>
           <span className={classes.labelItem}>Salir</span>
           <ArrowLeftEndOnRectangleIcon className="w-4 h-4 rotate-180" />
-        </Link>
+        </button>
       </ul>
     </nav>
   );
