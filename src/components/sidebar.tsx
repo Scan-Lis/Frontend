@@ -5,13 +5,63 @@ import {
   ComputerDesktopIcon,
   DocumentTextIcon,
   ExclamationTriangleIcon,
+  UserIcon,
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { RolesDB } from "@/types/types";
+import { useRouter } from "next/router";
 
-const Sidebar = () => {
+interface SidebarProps {
+  role: RolesDB;
+}
+
+const RoutesSidebar = {
+  [RolesDB.ROLE_ADMIN]: [
+    {
+      icon: <ComputerDesktopIcon className="w-4 h-4" />,
+      label: "Panel de estado",
+      href: "/dashboard/status-panel",
+    },
+    {
+      icon: <DocumentTextIcon className="w-4 h-4" />,
+      label: "Reportes",
+      href: "/dashboard/reports",
+    },
+    {
+      icon: <ExclamationTriangleIcon className="w-4 h-4" />,
+      label: "Problemas",
+      href: "/dashboard/problems",
+    },
+    {
+      icon: <UserIcon className="w-4 h-4" />,
+      label: "Gestionar usuarios",
+      href: "/dashboard/users",
+    },
+  ],
+  [RolesDB.ROLE_AUXILIAR]: [
+    {
+      icon: <ComputerDesktopIcon className="w-4 h-4" />,
+      label: "Panel de estado",
+      href: "/dashboard/status-panel",
+    },
+    {
+      icon: <DocumentTextIcon className="w-4 h-4" />,
+      label: "Reportes",
+      href: "/dashboard/reports",
+    },
+    {
+      icon: <ExclamationTriangleIcon className="w-4 h-4" />,
+      label: "Problemas",
+      href: "/dashboard/problems",
+    },
+  ],
+};
+
+const Sidebar = ({ role }: SidebarProps) => {
   const [isClose, setIsClose] = useState<boolean>(false);
+  const router = useRouter();
 
   const classes = {
     navbar: cn(
@@ -19,9 +69,16 @@ const Sidebar = () => {
       { "w-10 px-0": isClose }
     ),
     button: cn(
-      "flex gap-2 items-center px-4 py-3 bg-light-blue text-white rounded-lg",
+      "flex gap-2 items-center px-4 py-3 bg-transparent hover:bg-light-blue/35 text-white rounded-lg",
       {
-        "bg-transparent p-0 justify-center my-3 hover:bg-light-blue hover:opacity-9 transition-all":
+        "py-3 px-2 mx-auto justify-center hover:bg-light-blue/40 transition-all":
+          isClose,
+      }
+    ),
+    buttonClose: cn(
+      "flex gap-2 items-center px-4 py-3 bg-light-blue text-ultra-dark-blue font-semibold rounded-lg hover:bg-light-blue/35 hover:text-white transition-all",
+      {
+        "py-2 px-2 mx-auto justify-center bg-transparent text-white hover:bg-light-blue/40 transition-all":
           isClose,
       }
     ),
@@ -55,22 +112,18 @@ const Sidebar = () => {
       </section>
       <ul className={classes.navbar}>
         <div className="flex flex-col gap-4 text-light-blue">
-          <Link className={classes.button} href={""}>
-            <ComputerDesktopIcon className="w-4 h-4" />
-            <span className={classes.labelItem}>Panel de estado</span>
-          </Link>
-          <Link className={classes.button} href={""}>
-            <DocumentTextIcon className="w-4 h-4" />
-            <span className={classes.labelItem}>Reportes</span>
-          </Link>
-          <Link className={classes.button} href={""}>
-            <ExclamationTriangleIcon className="w-4 h-4" />
-            <span className={classes.labelItem}>Problemas</span>
-          </Link>
+          {RoutesSidebar[role].map(({ href, icon, label }) => (
+            <Link
+              className={cn(classes.button, {
+                "bg-light-blue/35": href === router.pathname,
+              })}
+              href={href}>
+              {icon}
+              <span className={classes.labelItem}>{label}</span>
+            </Link>
+          ))}
         </div>
-        <button
-          className="flex gap-2 items-center px-4 py-3 bg-light-blue text-ultra-dark-blue rounded-lg"
-          onClick={() => signIn()}>
+        <button className={classes.buttonClose} onClick={() => signIn()}>
           <span className={classes.labelItem}>Salir</span>
           <ArrowLeftEndOnRectangleIcon className="w-4 h-4 rotate-180" />
         </button>
