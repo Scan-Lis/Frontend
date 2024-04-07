@@ -114,6 +114,7 @@ const Sidebar = ({ role }: SidebarProps) => {
         <div className="flex flex-col gap-4 text-light-blue">
           {RoutesSidebar[role].map(({ href, icon, label }) => (
             <Link
+              key={href}
               className={cn(classes.button, {
                 "bg-light-blue/35": href === router.pathname,
               })}
