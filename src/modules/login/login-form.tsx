@@ -35,7 +35,7 @@ const LoginForm = () => {
       return;
     }
     setLoading(false);
-    router.push("/dashboard");
+    router.push("/dashboard/status-panel");
   };
 
   return (

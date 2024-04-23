@@ -1,5 +1,3 @@
-import WrapperInput from "@/components/wrapper-input";
-import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 import LoginForm from "./login-form";
 
 const LoginModule = () => {

@@ -32,3 +32,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.pattern_reportpage {
+  background-image: url("/assets/pattern-report.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
