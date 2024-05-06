@@ -14,7 +14,7 @@ const FormReport = () => {
       }
     }
     return;
-  }, [router]);
+  }, [router, slug]);
 
   const pcId = slug?.at(1);
   const salaId = slug?.at(0);
