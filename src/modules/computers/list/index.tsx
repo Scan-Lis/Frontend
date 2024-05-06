@@ -1,4 +1,4 @@
-import Filters from "@/components/filters";
+import Filters from "./filters-pc-list";
 import ListPcStates from "./list-pcs";
 import { useEffect, useState } from "react";
 import { PcInfoBack } from "@/types/types";
