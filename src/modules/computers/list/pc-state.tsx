@@ -1,19 +1,13 @@
-import { PcStateDB } from "@/types/types";
+import { PcInfoBack, PcStateColorsDict, SalasLabels } from "@/types/types";
 
 interface Props {
-  state: PcStateDB;
-  pcnumber: string;
+  pcInfo: PcInfoBack;
 }
 
-const PcStateColorsDict = {
-  [PcStateDB.alert]: "bg-alert",
-  [PcStateDB.maintenance]: "bg-orange-500",
-  [PcStateDB.working]: "bg-success",
-  [PcStateDB.failing]: "bg-failed",
-};
+const PcState = ({ pcInfo }: Props) => {
+  const { numeroPc, estado, sala } = pcInfo;
 
-const PcState = ({ state, pcnumber }: Props) => {
-  console.log(PcStateColorsDict[state]);
+  const color = PcStateColorsDict[estado] || "bg-gray-300";
 
   return (
     <article
@@ -21,11 +15,14 @@ const PcState = ({ state, pcnumber }: Props) => {
         "relative px-4 pt-8 pb-6 rounded-md flex flex-col gap-4 items-center bg-light-blue/50"
       }>
       <span
-        className={`absolute -top-3 inline-block text-white text-[.8rem] py-1 px-3 rounded-full ${PcStateColorsDict[state]}`}>
-        {state}
+        className={`absolute -top-3 inline-block text-white text-[.8rem] py-1 px-3 rounded-full ${color}`}>
+        {estado}
       </span>
       <img src="/assets/pc-icon.svg" alt="Icono del pc" />
-      <span className="font-semibold text-dark-gray">{pcnumber}</span>
+      <div className="font-semibold text-dark-gray text-center">
+        <p>PC {numeroPc} -</p>
+        <div>{SalasLabels[sala]}</div>
+      </div>
     </article>
   );
 };
