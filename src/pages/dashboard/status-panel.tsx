@@ -1,16 +1,14 @@
 import Filters from "@/components/filters";
 import Layout from "@/components/layout";
+import StatusPanelModule from "@/modules/computers/list";
 import ListPcStates from "@/modules/computers/list/list-pcs";
 
-const StatusPanel = () => {
+const StatusPanelPage = () => {
   return (
     <Layout>
-      <div className="flex flex-col gap-10">
-        <Filters />
-        <ListPcStates />
-      </div>
+      <StatusPanelModule />
     </Layout>
   );
 };
 
-export default StatusPanel;
+export default StatusPanelPage;
