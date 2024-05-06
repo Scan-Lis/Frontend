@@ -1,44 +1,15 @@
-import { PcStateDB } from "@/types/types";
+import { PcInfoBack } from "@/types/types";
 import PcState from "./pc-state";
 
-const listPcStates = [
-  {
-    id: 1,
-    name: "PC-1",
-    state: PcStateDB.alert,
-  },
-  {
-    id: 2,
-    name: "PC-2",
-    state: PcStateDB.working,
-  },
-  {
-    id: 3,
-    name: "PC-3",
-    state: PcStateDB.failing,
-  },
-  {
-    id: 4,
-    name: "PC-1",
-    state: PcStateDB.alert,
-  },
-  {
-    id: 5,
-    name: "PC-2",
-    state: PcStateDB.maintenance,
-  },
-  {
-    id: 6,
-    name: "PC-3",
-    state: PcStateDB.failing,
-  },
-];
+interface Props {
+  listPc: PcInfoBack[];
+}
 
-const ListPcStates = () => {
+const ListPcStates = ({ listPc }: Props) => {
   return (
     <section className="w-full grid grid-cols-6 gap-x-4 gap-y-8">
-      {listPcStates.map(({ id, name, state }) => (
-        <PcState key={id} state={state} pcnumber={name} />
+      {listPc.map((pc, index) => (
+        <PcState key={index} pcInfo={pc} />
       ))}
     </section>
   );
