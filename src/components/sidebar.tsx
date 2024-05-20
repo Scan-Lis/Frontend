@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { RolesDB } from "@/types/types";
 import { useRouter } from "next/router";
 
@@ -124,7 +124,7 @@ const Sidebar = ({ role }: SidebarProps) => {
             </Link>
           ))}
         </div>
-        <button className={classes.buttonClose} onClick={() => signIn()}>
+        <button className={classes.buttonClose} onClick={() => signOut()}>
           <span className={classes.labelItem}>Salir</span>
           <ArrowLeftEndOnRectangleIcon className="w-4 h-4 rotate-180" />
         </button>
