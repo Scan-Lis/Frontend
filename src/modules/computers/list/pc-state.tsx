@@ -1,4 +1,4 @@
-import { PcInfoBack, PcStateColorsDict, SalasLabels } from "@/types/types";
+import { PcInfoBack, PcStateDB, SalasLabels } from "@/types/types";
 
 interface Props {
   pcInfo: PcInfoBack;
@@ -7,7 +7,14 @@ interface Props {
 const PcState = ({ pcInfo }: Props) => {
   const { numeroPc, estado, sala } = pcInfo;
 
-  const color = PcStateColorsDict[estado] || "bg-gray-300";
+  const pcStateColorsDict = {
+    [PcStateDB.Alerta]: "bg-alert",
+    [PcStateDB.Mantenimiento]: "bg-orange-500",
+    [PcStateDB.Funcionando]: "bg-success",
+    [PcStateDB.Fallando]: "bg-failed",
+  };
+
+  const color = pcStateColorsDict[estado];
 
   return (
     <article
