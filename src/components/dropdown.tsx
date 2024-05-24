@@ -1,7 +1,14 @@
 import { cn } from "@/utils/classnames";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+/**
+ * This a type for the options of the dropdown
+ * Be recommend to use this type to define the options of the dropdown and the first option is the default selected
+ * @typedef {Object} Option
+ * @property {string} value - The value of the option
+ * @property {string} label - The label of the option
+ */
 type Option = {
   value: string;
   label: string;
@@ -9,19 +16,37 @@ type Option = {
 
 interface DropdownProps {
   options: Option[];
-  setSelectedOption: (option: string) => void;
-  selectedOption?: string;
   labelDropdown: string;
+  className?: string;
+  onChange: (option: Option) => void;
 }
+
+/**
+ * This components is a simple dropdown select, just show the selected option and the options
+ * @param {string} labelDropdown - The label of the dropdown
+ * @param {Option[]} options - The options to show in the dropdown, this type is an array of objects with the value and the label
+ * @param {Function} onChange - The function to call when the option is selected
+ * @param {string} className - The classname to add to the dropdown
+ *
+ * @returns {JSX.Element} - The dropdown component
+ */
 
 const Dropdown = ({
   labelDropdown,
   options,
-  selectedOption,
-  setSelectedOption,
+  className = "",
+  onChange,
 }: DropdownProps) => {
   const [isOpen, setisOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState("");
+  const [internalSelectedOption, setInternalSelectedOption] = useState<Option>({
+    value: options[0].value,
+    label: options[0].label,
+  });
+
+  useEffect(() => {
+    onChange(internalSelectedOption);
+  }, [internalSelectedOption]);
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -29,8 +54,8 @@ const Dropdown = ({
     setisOpen(!isOpen);
   };
 
-  const handleSelect = (option: string) => {
-    setSelectedOption(option);
+  const handleSelect = (option: Option) => {
+    setInternalSelectedOption(option);
     setisOpen(false);
   };
 
@@ -39,15 +64,15 @@ const Dropdown = ({
       "absolute z-20 bg-light-blue text-white p-4 w-full rounded-md flex flex-col gap-2 mt-2 hidden opacity-0 transition-all",
       { "block opacity-100": isOpen }
     ),
-    item: cn("hover:bg-white/35 cursor-pointer py-1 px-2 rounded-md "),
+    item: cn("hover:bg-white/35 cursor-pointer py-1 rounded-md "),
     icon: cn("w-6 h-6 rotate-0 transition-all", { "rotate-180": isOpen }),
   };
 
   return (
-    <div className="relative min-w-[12rem]">
+    <div className={`relative min-w-[12rem] ${className}`}>
       <button
         onClick={(e) => handleOpen(e)}
-        className="flex gap-2 items-center justify-center w-full bg-light-blue/35 rounded-md py-2 px-4 font-semibold">
+        className="flex gap-2 items-center justify-between w-full  bg-light-blue/35 rounded-md py-2 px-4 font-semibold text-dark-gray">
         {selectedLabel || labelDropdown}
         <ChevronDownIcon className={classes.icon} />
       </button>
@@ -55,10 +80,10 @@ const Dropdown = ({
         {options.map(({ label, value }, index) => (
           <li key={index} className={classes.item}>
             <button
-              className="w-full"
+              className="w-full text-left pl-3 outline-none"
               onClick={(e) => {
                 e.preventDefault();
-                handleSelect(value);
+                handleSelect({ label, value });
                 setSelectedLabel(label);
               }}>
               {label}
