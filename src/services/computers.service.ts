@@ -2,14 +2,36 @@ import { PcInfoBack, RequestResponse } from "@/types/types";
 import { http } from "@/utils/http";
 import { AxiosError } from "axios";
 
-export const getAllComputers = async (): Promise<
-  RequestResponse<PcInfoBack[]>
+export const getAllComputers = async ({
+  url,
+  page,
+  size = 10,
+}: {
+  url: string;
+  page: number;
+  size?: number;
+}): Promise<
+  RequestResponse<{
+    computers: PcInfoBack[];
+    totalPages: number;
+  }>
 > => {
   try {
-    const response = await http.get("/computador/all");
-    const data = response.data as PcInfoBack[];
+    const response = await http.get(`${url}?page=${page}&size=${size}`);
+    if (response.data.content === undefined && response.data !== undefined) {
+      return {
+        data: {
+          computers: [response.data],
+          totalPages: 0,
+        },
+        status: true,
+      };
+    }
     return {
-      data,
+      data: {
+        computers: response.data.content as PcInfoBack[],
+        totalPages: response.data.totalPages,
+      },
       status: true,
     };
   } catch (error) {
