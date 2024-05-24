@@ -1,8 +1,9 @@
-import { RolesDB } from "@/types/types";
+import { RolesDB, RolesLabels } from "@/types/types";
 
 interface Props {
   className?: string;
   role: RolesDB;
+  name: string;
 }
 
 const RoleColors = {
@@ -10,14 +11,16 @@ const RoleColors = {
   [RolesDB.ROLE_AUXILIAR]: "text-dark-blue bg-light-blue/40",
 };
 
-const UserProfileInfo = ({ className = "", role }: Props) => {
+const UserProfileInfo = ({ className = "", role, name }: Props) => {
+  console.log(RolesDB[role]);
+
   return (
     <section className={`flex gap-4 h-fit ${className}`}>
       <div className="flex flex-col items-end text-dark-gray font-semibold">
-        <h3>Jose Fernando Waldo Rojas</h3>
+        <h3>{name}</h3>
         <p
           className={`text-[.8rem] w-fit py-1 px-3 rounded-full text-center ${RoleColors[role]}`}>
-          {role}
+          {RolesLabels[role]}
         </p>
       </div>
       <div className="h-fit p-3 rounded-md bg-gradient-profile">

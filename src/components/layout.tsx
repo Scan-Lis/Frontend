@@ -20,15 +20,15 @@ const Layout = ({ children, className = "" }: LayoutProps) => {
   }
 
   const role = session.user.rol as RolesDB;
-  console.log(role);
 
   return (
     <main
       className={`relative p-8 h-screen flex gap-8 overflow-x-hidden ${className}`}>
-      <Sidebar role={RolesDB.ROLE_AUXILIAR} />
+      <Sidebar role={role} />
       <aside className="flex-1 flex flex-col gap-2">
         <UserProfileInfo
-          role={RolesDB.ROLE_AUXILIAR}
+          name={session.user.name as string}
+          role={role}
           className="self-end h-fit"
         />
         <div className="flex-1">{children}</div>

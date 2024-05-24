@@ -41,9 +41,14 @@ export const SalasLabels = {
 } as const;
 
 export enum RolesDB {
-  ROLE_ADMIN = "Administrador",
-  ROLE_AUXILIAR = "Auxiliar de Programación",
+  ROLE_ADMIN = "ROLE_ADMIN",
+  ROLE_AUXILIAR = "ROLE_AUXILIAR",
 }
+
+export const RolesLabels = {
+  [RolesDB.ROLE_ADMIN]: "Administrador",
+  [RolesDB.ROLE_AUXILIAR]: "Auxiliar de Programación",
+} as const;
 
 export const Routes = {
   [RolesDB.ROLE_ADMIN]: ["/dashboard/status-panel"],

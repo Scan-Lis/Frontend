@@ -21,7 +21,6 @@ const handler = NextAuth({
           });
           const jwt: string = res.data.token;
           const decoded = jwtDecode<{ rol: string }>(jwt as string);
-
           return res.data;
         } catch (error) {
           console.error(error);
@@ -37,12 +36,13 @@ const handler = NextAuth({
     },
     async session({ session, token }) {
       if (token) {
-        const decoded = jwtDecode<{ rol: string; sub: string }>(
+        const decoded = jwtDecode<{ rol: string; sub: string; jti: string }>(
           token.token as string
         );
         session.jwt = token.token as string;
         session.user.rol = decoded.rol;
-        session.user.email = decoded.sub;
+        session.user.email = decoded.jti.split("-")[1];
+        session.user.name = decoded.sub;
         console.log("Session --> ", session);
         console.log("Decode --> ", decoded);
       }
