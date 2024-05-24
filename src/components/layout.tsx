@@ -11,7 +11,15 @@ interface LayoutProps {
 const Layout = ({ children, className = "" }: LayoutProps) => {
   const { data: session } = useSession();
 
-  const role: RolesDB = session?.user?.rol as RolesDB;
+  if (!session) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <p>Cargando...</p>
+      </main>
+    );
+  }
+
+  const role = session.user.rol as RolesDB;
   console.log(role);
 
   return (
