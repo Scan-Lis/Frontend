@@ -19,6 +19,12 @@
   .debug {
     border: 1.5px solid red;
   }
+  .btn {
+    @apply flex gap-2 justify-center rounded-md py-2 px-4 font-semibold transition-all duration-300 ease-in-out;
+  }
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-dark;
+  }
 }
 
 @layer utilities {
