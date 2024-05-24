@@ -60,3 +60,24 @@ export interface RequestResponse<T> {
   data: string | T;
   status: boolean;
 }
+
+export interface ReportDataPost {
+  correo: string;
+  tipo: string;
+  descripcion: string;
+  almacenado: boolean;
+  fecha: string;
+  sala: string;
+  numeroPc: number;
+}
+
+export interface ReportDataGet {
+  id: number;
+  correo: string;
+  tipo: string;
+  descripcion: string;
+  almacenado: boolean;
+  fecha: Date;
+  sala: SalasDB;
+  numeroPc: number;
+}
