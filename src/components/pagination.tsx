@@ -9,41 +9,38 @@ interface PaginationProps {
 
 const Pagination = ({
   currentPage,
-  handlePage,
   totalPages,
+  handlePage,
 }: PaginationProps) => {
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
+    if (currentPage < totalPages - 1) {
       handlePage(currentPage + 1);
     }
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
+    if (currentPage > 0) {
       handlePage(currentPage - 1);
     }
   };
 
   const classes = {
-    button: cn("py-2 px-4 bg-light-blue/30 rounded-md", {
-      "cursor-not-allowed bg-slate-400/40":
-        currentPage === 1 || currentPage === totalPages,
-    }),
+    button: cn("py-2 px-4 bg-light-blue/30 rounded-md"),
   };
 
   return (
     <div className="w-full flex justify-center items-center my-4 gap-4 text-dark-blue font-medium ">
       <button
-        disabled={currentPage === 1}
+        disabled={currentPage === 0}
         onClick={handlePrevPage}
         className={classes.button}>
         <ArrowLeftIcon className="w-5 h-5" />
       </button>
       <p className="text-sm">
-        {currentPage} de {totalPages}
+        {currentPage + 1} de {totalPages}
       </p>
       <button
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages - 1}
         onClick={handleNextPage}
         className={classes.button}>
         <ArrowRightIcon className="w-5 h-5" />
