@@ -1,54 +1,25 @@
 import { ArrowPathIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import Dropdown from "../../../components/dropdown";
-import { useRouter } from "next/router";
-import { PcInfoBack, SalasLabels } from "@/types/types";
-import { useEffect, useState } from "react";
-import {
-  getComputerByNumberAndRoom,
-  getComputersByRoom,
-} from "@/services/computers.service";
+import { SalasLabels } from "@/types/types";
+import { useState } from "react";
 
 interface FiltersProps {
-  setListPc: (listPc: PcInfoBack[]) => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string) => void;
+  setUrl: (url: string) => void;
 }
 
-const Filters = ({ setListPc, setError, setLoading }: FiltersProps) => {
-  const router = useRouter();
+const Filters = ({ setUrl }: FiltersProps) => {
   const salas = Object.entries(SalasLabels).map(([key, value]) => {
     return { value: key, label: value };
   });
   const [inputSearch, setInputSearch] = useState<string>("");
   const [selectedOptionSearch, setSelectedOptionSearch] = useState("");
-  const [selectedOptionFilter, setSelectedOptionFilter] = useState("");
-
-  /* 
-  Funciona como una especie de onChange para cuando cambie el valor de selectedOptionFilter
-  se haga una petición a la API para obtener los computadores de la sala seleccionada 
-  */
-  useEffect(() => {
-    if (selectedOptionFilter === "") return;
-    (async () => {
-      setLoading(true);
-      const res = await getComputersByRoom(selectedOptionFilter);
-      if (res.status) {
-        setListPc(res.data as PcInfoBack[]);
-        setLoading(false);
-        return;
-      }
-      setLoading(false);
-      setError(res.data as string);
-      setListPc([]);
-    })();
-  }, [selectedOptionFilter]);
 
   /*
   Función para refrescar la página, se utiliza para recargar los computadores
   y restablecer el valor de los filtros
   */
   const refresh = () => {
-    router.reload();
+    setUrl("/computador/all");
   };
 
   /*
@@ -58,19 +29,7 @@ const Filters = ({ setListPc, setError, setLoading }: FiltersProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputSearch === "" || selectedOptionSearch === "") return;
-    setLoading(true);
-    const response = await getComputerByNumberAndRoom(
-      selectedOptionSearch,
-      Number(inputSearch)
-    );
-    if (response.status) {
-      setLoading(false);
-      setListPc([response.data as PcInfoBack]);
-      return;
-    }
-    setLoading(false);
-    setError(response.data as string);
-    setListPc([]);
+    setUrl(`/computador/${selectedOptionSearch}/${inputSearch}`);
   };
 
   return (
@@ -78,9 +37,10 @@ const Filters = ({ setListPc, setError, setLoading }: FiltersProps) => {
       <form className="flex items-center gap-2 w-full" onSubmit={handleSubmit}>
         <Dropdown
           labelDropdown="Buscar en la sala"
-          setSelectedOption={setSelectedOptionSearch}
-          selectedOption={selectedOptionSearch}
           options={salas}
+          onChange={(option) => {
+            setSelectedOptionSearch(option.value);
+          }}
         />
         <div className="font-semibold flex-1 flex items-center gap-2 bg-light-blue/35 py-2 px-4 rounded-md">
           <input
@@ -99,10 +59,15 @@ const Filters = ({ setListPc, setError, setLoading }: FiltersProps) => {
         </button>
       </form>
       <Dropdown
-        labelDropdown="Filtrar por"
-        options={salas}
-        selectedOption={selectedOptionFilter}
-        setSelectedOption={setSelectedOptionFilter}
+        labelDropdown="Buscar en la sala"
+        options={[{ label: "Todas", value: "All" }, ...salas]}
+        onChange={(option) => {
+          if (option.value === "All") {
+            setUrl("/computador/all");
+            return;
+          }
+          setUrl(`/computador/sala/${option.value}`);
+        }}
       />
       <button
         onClick={refresh}
