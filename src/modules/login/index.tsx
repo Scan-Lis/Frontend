@@ -1,6 +1,19 @@
+import { useEffect } from "react";
 import LoginForm from "./login-form";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const LoginModule = () => {
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard/status-panel");
+    }
+    return;
+  }, [status, router]);
+
   return (
     <main className="flex min-h-screen">
       <section className="flex flex-col items-center justify-center w-[55%]">
