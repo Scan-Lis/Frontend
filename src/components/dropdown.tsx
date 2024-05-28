@@ -1,6 +1,8 @@
 import { cn } from "@/utils/classnames";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+// FIX: The functions with the useCallback hook dont working
 
 /**
  * This a type for the options of the dropdown
@@ -30,14 +32,13 @@ interface DropdownProps {
  *
  * @returns {JSX.Element} - The dropdown component
  */
-
 const Dropdown = ({
   labelDropdown,
   options,
   className = "",
   onChange,
 }: DropdownProps) => {
-  const [isOpen, setisOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState("");
   const [internalSelectedOption, setInternalSelectedOption] = useState<Option>({
     value: options[0].value,
@@ -48,16 +49,22 @@ const Dropdown = ({
     onChange(internalSelectedOption);
   }, [internalSelectedOption]);
 
-  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setisOpen(!isOpen);
-  };
+  const handleOpen = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+      setIsOpen(!isOpen);
+    },
+    [isOpen]
+  );
 
-  const handleSelect = (option: Option) => {
-    setInternalSelectedOption(option);
-    setisOpen(false);
-  };
+  const handleSelect = useCallback(
+    (option: Option) => {
+      setInternalSelectedOption(option);
+      setIsOpen(false);
+    },
+    [internalSelectedOption]
+  );
 
   const classes = {
     options: cn(
