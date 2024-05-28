@@ -2,8 +2,6 @@ import { cn } from "@/utils/classnames";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-// FIX: The functions with the useCallback hook dont working
-
 /**
  * This a type for the options of the dropdown
  * Be recommend to use this type to define the options of the dropdown and the first option is the default selected
