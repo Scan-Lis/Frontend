@@ -2,14 +2,17 @@ import { useEffect } from "react";
 import LoginForm from "./login-form";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { directTo } from "@/components/sidebar/sidebar-routes";
+import { RolesDB } from "@/types/types";
 
 const LoginModule = () => {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/dashboard/status-panel");
+      const route = directTo(data.user.rol as RolesDB);
+      router.push(route);
     }
     return;
   }, [status, router]);

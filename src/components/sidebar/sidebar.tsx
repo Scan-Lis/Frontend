@@ -12,52 +12,11 @@ import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { RolesDB } from "@/types/types";
 import { useRouter } from "next/router";
+import { RoutesSidebar } from "./sidebar-routes";
 
 interface SidebarProps {
   role: RolesDB;
 }
-
-const RoutesSidebar = {
-  [RolesDB.ROLE_ADMIN]: [
-    {
-      icon: <ComputerDesktopIcon className="w-4 h-4" />,
-      label: "Panel de estado",
-      href: "/dashboard/status-panel",
-    },
-    {
-      icon: <DocumentTextIcon className="w-4 h-4" />,
-      label: "Reportes",
-      href: "/dashboard/reports",
-    },
-    {
-      icon: <ExclamationTriangleIcon className="w-4 h-4" />,
-      label: "Problemas",
-      href: "/dashboard/problems",
-    },
-    {
-      icon: <UserIcon className="w-4 h-4" />,
-      label: "Gestionar usuarios",
-      href: "/dashboard/users",
-    },
-  ],
-  [RolesDB.ROLE_AUXILIAR]: [
-    {
-      icon: <ComputerDesktopIcon className="w-4 h-4" />,
-      label: "Panel de estado",
-      href: "/dashboard/status-panel",
-    },
-    {
-      icon: <DocumentTextIcon className="w-4 h-4" />,
-      label: "Reportes",
-      href: "/dashboard/reports",
-    },
-    {
-      icon: <ExclamationTriangleIcon className="w-4 h-4" />,
-      label: "Problemas",
-      href: "/dashboard/problems",
-    },
-  ],
-};
 
 const Sidebar = ({ role }: SidebarProps) => {
   const [isClose, setIsClose] = useState<boolean>(false);
@@ -124,7 +83,9 @@ const Sidebar = ({ role }: SidebarProps) => {
             </Link>
           ))}
         </div>
-        <button className={classes.buttonClose} onClick={() => signOut()}>
+        <button
+          className={classes.buttonClose}
+          onClick={() => signOut({ callbackUrl: "/login" })}>
           <span className={classes.labelItem}>Salir</span>
           <ArrowLeftEndOnRectangleIcon className="w-4 h-4 rotate-180" />
         </button>

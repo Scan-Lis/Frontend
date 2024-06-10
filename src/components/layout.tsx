@@ -1,5 +1,5 @@
 import UserProfileInfo from "@/modules/user/info/user-profile-info";
-import Sidebar from "./sidebar";
+import Sidebar from "./sidebar/sidebar";
 import { RolesDB } from "@/types/types";
 import { useSession } from "next-auth/react";
 

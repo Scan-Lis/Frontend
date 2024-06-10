@@ -3,7 +3,6 @@ import WrapperInput from "@/components/wrapper-input";
 import { LoginFields } from "@/types/types";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -16,7 +15,6 @@ const LoginForm = () => {
     mode: "onChange",
   });
 
-  const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +33,6 @@ const LoginForm = () => {
       return;
     }
     setLoading(false);
-    router.push("/dashboard/status-panel");
   };
 
   return (
