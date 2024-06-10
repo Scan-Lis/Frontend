@@ -2,6 +2,7 @@ import UserProfileInfo from "@/modules/user/info/user-profile-info";
 import Sidebar from "./sidebar/sidebar";
 import { RolesDB } from "@/types/types";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,14 +10,20 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, className = "" }: LayoutProps) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  if (!session) {
+  if (status === "loading") {
     return (
       <main className="flex justify-center items-center h-screen">
         <p>Cargando...</p>
       </main>
     );
+  }
+
+  if (!session) {
+    router.push("/login");
+    return null;
   }
 
   const role = session.user.rol as RolesDB;
