@@ -3,6 +3,7 @@ import Sidebar from "./sidebar/sidebar";
 import { RolesDB } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { isRouteAuthorized } from "./sidebar/sidebar-routes";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -25,6 +26,17 @@ const Layout = ({ children, className = "" }: LayoutProps) => {
     router.push("/login");
     return null;
   }
+
+  // if (status === "authenticated") {
+  //   const isPermited = isRouteAuthorized(
+  //     session.user.rol as RolesDB,
+  //     router.pathname
+  //   );
+  //   if (!isPermited) {
+  //     router.push("/login");
+  //     return null;
+  //   }
+  // }
 
   const role = session.user.rol as RolesDB;
 

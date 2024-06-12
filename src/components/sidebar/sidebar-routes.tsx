@@ -52,4 +52,8 @@ const directTo = (role: RolesDB) => {
   return RoutesSidebar[role][0].href;
 };
 
-export { RoutesSidebar, directTo };
+const isRouteAuthorized = (role: RolesDB, route: string) => {
+  return RoutesSidebar[role].some((r) => r.href === route);
+};
+
+export { RoutesSidebar, directTo, isRouteAuthorized };
