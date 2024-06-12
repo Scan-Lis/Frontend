@@ -5,6 +5,7 @@ Este proyecto forma parte del **Laboratorio Integrado de Sistemas**. El objetivo
 ## Como iniciar el proyecto
 ```
 # Clonar el proyecto
+
 git clone https://github.com/Scan-Lis/Frontend.git
 
 # Entrar a la carpeta del proyecto
