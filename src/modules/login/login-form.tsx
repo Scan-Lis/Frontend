@@ -20,7 +20,6 @@ const LoginForm = () => {
 
   const onSubmitForm = async (data: LoginFields) => {
     setLoading(true);
-    console.log(data);
 
     const res = await signIn("credentials", {
       ...data,
@@ -39,7 +38,8 @@ const LoginForm = () => {
     <form
       onSubmit={handleSubmit(onSubmitForm)}
       method="post"
-      className="flex flex-col gap-8 w-[60%] max-w-96 items-center">
+      className="flex flex-col gap-8 w-[60%] max-w-96 items-center"
+    >
       <h2 className="font-extrabold text-4xl text-dark-blue">Iniciar Sesión</h2>
       <section className="w-full flex flex-col gap-4">
         <WrapperInput label="Usuario">

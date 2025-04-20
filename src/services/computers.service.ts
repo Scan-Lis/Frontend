@@ -78,7 +78,6 @@ export const getComputerByNumberAndRoom = async (
   } catch (error) {
     const err = error as AxiosError;
     const errMessage = err.response?.data as string;
-    console.log(err);
     return {
       data: errMessage || "Error al obtener el computador",
       status: false,

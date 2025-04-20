@@ -43,7 +43,8 @@ const FormReport = ({ pcId, salaId }: FormReportProps) => {
     <form
       onSubmit={handleSubmit(handleSubmitForm)}
       action="POST"
-      className="min-w-80 w-[40%] bg-white flex flex-col gap-8 px-6 py-8 rounded-lg shadow-lg">
+      className="min-w-80 w-[40%] bg-white flex flex-col gap-8 px-6 py-8 rounded-lg shadow-lg"
+    >
       <header className="w-[70%] flex flex-col gap-2 mx-auto text-center font-semibold text-dark-blue">
         <h2 className="font-bold text-3xl">Reporte</h2>
         <div className="w-1/2 h-[1px] bg-dark-blue mx-auto"></div>
@@ -59,7 +60,8 @@ const FormReport = ({ pcId, salaId }: FormReportProps) => {
             })}
             className="input"
             id=""
-            placeholder="La pantalla no enciende"></textarea>
+            placeholder="La pantalla no enciende"
+          ></textarea>
         </WrapperInput>
         {formState.errors.detail && (
           <p className="text-red-500 text-xs -mt-2 font-semibold">
@@ -95,7 +97,8 @@ const FormReport = ({ pcId, salaId }: FormReportProps) => {
         )}
         <button
           type="submit"
-          className="flex gap-2 text-white font-semibold bg-dark-blue w-full justify-center items-center rounded-lg p-3">
+          className="flex gap-2 text-white font-semibold bg-dark-blue w-full justify-center items-center rounded-lg p-3"
+        >
           Enviar
           <PaperAirplaneIcon className="w-6 h-6 " />
         </button>

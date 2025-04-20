@@ -15,7 +15,6 @@ const FormReport = () => {
   useEffect(() => {
     if (slug) {
       if (slug.length !== 2) {
-        console.log("Invalid slug");
         return;
       }
     }
