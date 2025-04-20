@@ -86,3 +86,14 @@ export interface ReportDataGet {
   sala: SalasDB;
   numeroPc: number;
 }
+
+export interface ProblemDataGet {
+  id: number;
+  descripcionBase: string;
+  solucionado: boolean;
+  fechaCreacion: Date;
+  fechaTerminacion: Date | null;
+  auxiliarAsignado: string | null;
+  sala: SalasDB;
+  numeroPc: number;
+}

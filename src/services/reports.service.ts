@@ -107,7 +107,7 @@ export const approveReport = async ({
   pcLabel: string;
 }): Promise<RequestResponse<string>> => {
   try {
-    const response = await http.post("/reporte/aprobar");
+    await http.post(`/reporte/aprobar/${idReport}`);
     return {
       data: `El reporte del computador ${pcLabel} ha sido aprovado con éxito`,
       status: true,

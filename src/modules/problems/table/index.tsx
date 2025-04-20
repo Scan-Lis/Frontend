@@ -1,7 +1,11 @@
-import { ReportDataGet } from "@/types/types";
-import TableRow from "./table-row";
+import { ProblemDataGet } from "@/types/types";
+import ProblemRow from "./table-row";
 
-const TableReports = ({ listReports }: { listReports: ReportDataGet[] }) => {
+const ProblemsTable = ({
+  listProblems,
+}: {
+  listProblems: ProblemDataGet[];
+}) => {
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -14,28 +18,16 @@ const TableReports = ({ listReports }: { listReports: ReportDataGet[] }) => {
               Descripción
             </th>
             <th scope="col" className="px-6 py-3">
-              Correo
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Tipo
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Estado
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Fecha
+              Sala
             </th>
             <th scope="col" className="px-6 py-3">
               Computador
             </th>
-            <th scope="col" className="px-6 py-3">
-              Acciones
-            </th>
           </tr>
         </thead>
         <tbody>
-          {listReports.map((report) => (
-            <TableRow key={report.id} {...report} />
+          {listProblems.map((problem) => (
+            <ProblemRow key={problem.id} {...problem} />
           ))}
         </tbody>
       </table>
@@ -43,4 +35,4 @@ const TableReports = ({ listReports }: { listReports: ReportDataGet[] }) => {
   );
 };
 
-export default TableReports;
+export default ProblemsTable;
