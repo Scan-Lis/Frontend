@@ -9,8 +9,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
  * @property {string} value - The value of the option
  * @property {string} label - The label of the option
  */
-type Option = {
-  value: string;
+export type Option = {
+  value: string | boolean | null;
   label: string;
 };
 
@@ -77,8 +77,11 @@ const Dropdown = ({
     <div className={`relative min-w-[12rem] ${className}`}>
       <button
         onClick={(e) => handleOpen(e)}
-        className="flex gap-2 items-center justify-between w-full  bg-light-blue/35 rounded-md py-2 px-4 font-semibold text-dark-gray">
-        {selectedLabel || labelDropdown}
+        className="flex gap-2 items-center justify-between w-full  bg-light-blue/35 rounded-md py-2 px-4 font-semibold text-dark-gray"
+      >
+        {internalSelectedOption.value !== null
+          ? selectedLabel || labelDropdown
+          : labelDropdown}
         <ChevronDownIcon className={classes.icon} />
       </button>
       <ul className={classes.options}>
@@ -90,7 +93,8 @@ const Dropdown = ({
                 e.preventDefault();
                 handleSelect({ label, value });
                 setSelectedLabel(label);
-              }}>
+              }}
+            >
               {label}
             </button>
           </li>

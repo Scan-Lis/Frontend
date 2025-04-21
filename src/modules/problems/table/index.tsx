@@ -23,6 +23,18 @@ const ProblemsTable = ({
             <th scope="col" className="px-6 py-3">
               Computador
             </th>
+            <th scope="col" className="px-6 py-3">
+              Estado
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Fecha de creación
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Fecha de terminación
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Solucionado por
+            </th>
           </tr>
         </thead>
         <tbody>
