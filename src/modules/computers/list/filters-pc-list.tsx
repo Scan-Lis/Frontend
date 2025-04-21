@@ -39,7 +39,9 @@ const Filters = ({ setUrl }: FiltersProps) => {
           labelDropdown="Buscar en la sala"
           options={salas}
           onChange={(option) => {
-            setSelectedOptionSearch(option.value);
+            if (option.value && typeof option.value === "string") {
+              setSelectedOptionSearch(option.value);
+            }
           }}
         />
         <div className="font-semibold flex-1 flex items-center gap-2 bg-light-blue/35 py-2 px-4 rounded-md">
@@ -54,7 +56,8 @@ const Filters = ({ setUrl }: FiltersProps) => {
         </div>
         <button
           type="submit"
-          className="bg-light-blue/35 px-2 py-2 rounded-md font-semibold">
+          className="bg-light-blue/35 px-2 py-2 rounded-md font-semibold"
+        >
           <MagnifyingGlassIcon className="w-6 h-6" />
         </button>
       </form>
@@ -71,7 +74,8 @@ const Filters = ({ setUrl }: FiltersProps) => {
       />
       <button
         onClick={refresh}
-        className="flex gap-2 justify-center bg-light-blue/35 rounded-md py-2 px-4 font-semibold">
+        className="flex gap-2 justify-center bg-light-blue/35 rounded-md py-2 px-4 font-semibold"
+      >
         Refrescar
         <ArrowPathIcon className="w-5 h-6" />
       </button>
