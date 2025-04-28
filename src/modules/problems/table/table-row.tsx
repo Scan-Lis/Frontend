@@ -1,3 +1,4 @@
+import { AssignProblemToUser } from "@/modules/components/assign-problem-to-user";
 import { BadgeProblemState } from "@/modules/components/badge-problem-state";
 import { ProblemDataGet } from "@/types/types";
 import { parseRoomName } from "@/utils/utils";
@@ -27,7 +28,10 @@ const ProblemRow = ({ ...problem }: ProblemDataGet) => {
           : "Sin terminar"}
       </td>
       <td className="px-6 py-4">
-        {problem.auxiliarAsignado ? problem.auxiliarAsignado : "Sin asignar"}
+        <AssignProblemToUser
+          problemId={problem.id.toString()}
+          auxiliarAsignado={problem.auxiliarAsignado}
+        />
       </td>
     </tr>
   );

@@ -47,3 +47,29 @@ export const markProblemAsSolved = async ({
     };
   }
 };
+
+export const assignProblemToUser = async ({
+  problemId,
+  userEmail,
+}: {
+  problemId: string;
+  userEmail: string;
+}): Promise<RequestResponse<ProblemDataGet>> => {
+  try {
+    const response = await http.post(`/problema/asignar`, {
+      id: problemId,
+      correoUsuario: userEmail,
+    });
+    return {
+      data: response.data as ProblemDataGet,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al asignar el problema al usuario",
+      status: false,
+    };
+  }
+};

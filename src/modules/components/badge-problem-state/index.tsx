@@ -41,6 +41,10 @@ const BadgeProblemState = ({
     const response = await markProblemAsSolved({ id: problemId });
     if (response.status) {
       toast.success("Problema solucionado");
+      // Add timer to reload page after successful state change
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // Reload after 2 seconds to allow toast to be visible
     } else {
       toast.error(response.data as string);
     }
