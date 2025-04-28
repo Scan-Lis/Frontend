@@ -1,4 +1,4 @@
-import { cn } from "@/utils/classnames";
+import { cn } from "@/lib/utils";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 

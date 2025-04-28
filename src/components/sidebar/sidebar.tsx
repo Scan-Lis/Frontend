@@ -1,4 +1,4 @@
-import { cn } from "@/utils/classnames";
+import { cn } from "@/lib/utils";
 import {
   ArrowLeftEndOnRectangleIcon,
   Bars4Icon,
@@ -50,7 +50,8 @@ const Sidebar = ({ role }: SidebarProps) => {
       <section className="flex gap-4 items-center">
         <button
           onClick={() => setIsClose(!isClose)}
-          className="p-2 rounded-lg bg-dark-blue text-white w-fit cursor-pointer hover:bg-ultra-dark-blue transition-all">
+          className="p-2 rounded-lg bg-dark-blue text-white w-fit cursor-pointer hover:bg-ultra-dark-blue transition-all"
+        >
           <Bars4Icon className="w-6 h-6" />
         </button>
         <div className={classes.logo}>
@@ -77,7 +78,8 @@ const Sidebar = ({ role }: SidebarProps) => {
               className={cn(classes.button, {
                 "bg-light-blue/35": href === router.pathname,
               })}
-              href={href}>
+              href={href}
+            >
               {icon}
               <span className={classes.labelItem}>{label}</span>
             </Link>
@@ -85,7 +87,8 @@ const Sidebar = ({ role }: SidebarProps) => {
         </div>
         <button
           className={classes.buttonClose}
-          onClick={() => signOut({ callbackUrl: "/login" })}>
+          onClick={() => signOut({ callbackUrl: "/login" })}
+        >
           <span className={classes.labelItem}>Salir</span>
           <ArrowLeftEndOnRectangleIcon className="w-4 h-4 rotate-180" />
         </button>

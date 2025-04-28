@@ -1,4 +1,4 @@
-import { cn } from "@/utils/classnames";
+import { cn } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 
 interface PaginationProps {
@@ -33,7 +33,8 @@ const Pagination = ({
       <button
         disabled={currentPage === 0}
         onClick={handlePrevPage}
-        className={classes.button}>
+        className={classes.button}
+      >
         <ArrowLeftIcon className="w-5 h-5" />
       </button>
       <p className="text-sm">
@@ -42,7 +43,8 @@ const Pagination = ({
       <button
         disabled={currentPage === totalPages - 1}
         onClick={handleNextPage}
-        className={classes.button}>
+        className={classes.button}
+      >
         <ArrowRightIcon className="w-5 h-5" />
       </button>
     </div>

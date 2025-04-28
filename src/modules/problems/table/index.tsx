@@ -33,7 +33,7 @@ const ProblemsTable = ({
               Fecha de terminación
             </th>
             <th scope="col" className="px-6 py-3">
-              Solucionado por
+              Asignado a
             </th>
           </tr>
         </thead>

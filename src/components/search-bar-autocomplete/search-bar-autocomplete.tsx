@@ -1,4 +1,4 @@
-import { cn } from "@/utils/classnames";
+import { cn } from "@/lib/utils";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 
@@ -43,12 +43,14 @@ const SearchBarAutocomplete = () => {
             "opacity-100":
               searchInput.length > 0 && filteredAuxiliares.length > 0,
           }
-        )}>
+        )}
+      >
         {filteredAuxiliares.map((auxiliar, index) => (
           <li
             onClick={() => setSearchInput(auxiliar)}
             key={index}
-            className="hover:bg-white/35 cursor-pointer py-1 px-2 rounded-md">
+            className="hover:bg-white/35 cursor-pointer py-1 px-2 rounded-md"
+          >
             {auxiliar}
           </li>
         ))}

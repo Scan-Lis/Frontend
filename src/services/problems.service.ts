@@ -26,3 +26,24 @@ export const getProblems = async ({
     };
   }
 };
+
+export const markProblemAsSolved = async ({
+  id,
+}: {
+  id: string;
+}): Promise<RequestResponse<{}>> => {
+  try {
+    const response = await http.post(`/problema/solucionar/${id}`);
+    return {
+      data: response.data,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al solucionar el problema",
+      status: false,
+    };
+  }
+};
