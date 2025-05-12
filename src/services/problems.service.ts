@@ -29,11 +29,13 @@ export const getProblems = async ({
 
 export const markProblemAsSolved = async ({
   id,
+  observacion,
 }: {
   id: string;
+  observacion: string;
 }): Promise<RequestResponse<{}>> => {
   try {
-    const response = await http.post(`/problema/solucionar/${id}`);
+    const response = await http.post(`/problema/solucionar/${id}`, observacion);
     return {
       data: response.data,
       status: true,

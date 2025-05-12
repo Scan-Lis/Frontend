@@ -38,7 +38,10 @@ const BadgeProblemState = ({
 
   const handleChangeState = async () => {
     setIsLoading(true);
-    const response = await markProblemAsSolved({ id: problemId });
+    const response = await markProblemAsSolved({
+      id: problemId,
+      observacion: "Problema solucionado por el usuario",
+    });
     if (response.status) {
       toast.success("Problema solucionado");
       // Add timer to reload page after successful state change

@@ -35,6 +35,9 @@ const ProblemsTable = ({
             <th scope="col" className="px-6 py-3">
               Asignado a
             </th>
+            <th scope="col" className="px-6 py-3">
+              Acciones
+            </th>
           </tr>
         </thead>
         <tbody>

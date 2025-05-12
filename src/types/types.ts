@@ -97,3 +97,9 @@ export interface ProblemDataGet {
   sala: SalasDB;
   numeroPc: number;
 }
+
+export interface SuspensiveDotsItems {
+  icon: JSX.Element;
+  title: string;
+  onClick: () => void;
+}

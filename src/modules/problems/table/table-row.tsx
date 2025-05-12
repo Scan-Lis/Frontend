@@ -3,6 +3,7 @@ import { BadgeProblemState } from "@/modules/components/badge-problem-state";
 import { ProblemDataGet } from "@/types/types";
 import { parseRoomName } from "@/utils/utils";
 import { format } from "date-fns";
+import { ProblemActionsTable } from "@/modules/problems/actions-table";
 
 const ProblemRow = ({ ...problem }: ProblemDataGet) => {
   return (
@@ -32,6 +33,9 @@ const ProblemRow = ({ ...problem }: ProblemDataGet) => {
           problemId={problem.id.toString()}
           auxiliarAsignado={problem.auxiliarAsignado}
         />
+      </td>
+      <td className="px-6 py-4">
+        <ProblemActionsTable problemId={problem.id.toString()} />
       </td>
     </tr>
   );
