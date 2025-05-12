@@ -1,5 +1,9 @@
 import { http } from "@/utils/http";
-import { ProblemDataGet, RequestResponse } from "@/types/types";
+import {
+  ObservationDataGet,
+  ProblemDataGet,
+  RequestResponse,
+} from "@/types/types";
 import { AxiosError } from "axios";
 
 export const getProblems = async ({
@@ -71,6 +75,64 @@ export const assignProblemToUser = async ({
     const errMessage = err.response?.data as string;
     return {
       data: errMessage || "Error al asignar el problema al usuario",
+      status: false,
+    };
+  }
+};
+
+export const addObservationToProblem = async ({
+  problemId,
+  observation,
+  author,
+}: {
+  problemId: string;
+  observation: string;
+  author: string;
+}): Promise<RequestResponse<ProblemDataGet>> => {
+  try {
+    const response = await http.post(
+      `/problema/agregarObservacion/${problemId}`,
+      {
+        observacion: observation,
+        autor: author,
+      }
+    );
+    return {
+      data: response.data as ProblemDataGet,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al asignar el problema al usuario",
+      status: false,
+    };
+  }
+};
+
+export const getObservationsByProblemId = async ({
+  problemId,
+  page,
+  size = 10,
+}: {
+  problemId: string;
+  page: number;
+  size?: number;
+}): Promise<RequestResponse<ObservationDataGet[]>> => {
+  try {
+    const response = await http.get(
+      `/problema/observaciones/${problemId}?page=${page}&size=${size}`
+    );
+    return {
+      data: response.data.content as ObservationDataGet[],
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al obtener las observaciones",
       status: false,
     };
   }

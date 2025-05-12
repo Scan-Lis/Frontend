@@ -4,6 +4,7 @@ import { useContextOpenModalId } from "@/context/use-context-open-modal";
 import { SuspensiveDotsItems } from "@/types/types";
 import { AddObservationModal } from "../modals/add-observation-modal";
 import { ProblemEnumType } from "@/types/problem-enum-type";
+import router from "next/router";
 
 const ProblemActionsTable = ({ problemId }: { problemId: string }) => {
   const { setOpenModalId } = useContextOpenModalId();
@@ -24,7 +25,9 @@ const ProblemActionsTable = ({ problemId }: { problemId: string }) => {
     {
       icon: IconsList.details,
       title: "Ver detalles",
-      onClick: () => {},
+      onClick: () => {
+        router.push(`/dashboard/problems/${problemId}`);
+      },
     },
   ];
 

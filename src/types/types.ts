@@ -103,3 +103,11 @@ export interface SuspensiveDotsItems {
   title: string;
   onClick: () => void;
 }
+
+export interface ObservationDataGet {
+  id: number;
+  descripcion: string;
+  fecha: string;
+  autor: string;
+  problemaId: number;
+}
