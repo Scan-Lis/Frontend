@@ -111,3 +111,11 @@ export interface ObservationDataGet {
   autor: string;
   problemaId: number;
 }
+
+export interface UserDataGet {
+  id: number;
+  nombre: string;
+  cedula: string;
+  correo: string;
+  rol: "ADMIN" | "AUXILIAR";
+}
