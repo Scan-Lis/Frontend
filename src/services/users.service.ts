@@ -1,4 +1,4 @@
-import { RequestResponse, UserDataGet } from "@/types/types";
+import { RequestResponse, UserDataGet, UserDataPost } from "@/types/types";
 import { http } from "@/utils/http";
 import { AxiosError } from "axios";
 
@@ -30,6 +30,25 @@ export const getUsers = async ({
     const errMessage = err.response?.data as string;
     return {
       data: errMessage || "Error al obtener los reportes",
+      status: false,
+    };
+  }
+};
+
+export const createUser = async (
+  user: UserDataPost
+): Promise<RequestResponse<{ token: string }>> => {
+  try {
+    const response = await http.post("/auth/register", user);
+    return {
+      data: response.data as { token: string },
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al crear el usuario",
       status: false,
     };
   }

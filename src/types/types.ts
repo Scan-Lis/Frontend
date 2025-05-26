@@ -119,3 +119,11 @@ export interface UserDataGet {
   correo: string;
   rol: "ADMIN" | "AUXILIAR";
 }
+
+export interface UserDataPost {
+  nombre: string;
+  cedula: string;
+  correo: string;
+  contrasena: string;
+  rol: "ADMIN" | "AUXILIAR";
+}
