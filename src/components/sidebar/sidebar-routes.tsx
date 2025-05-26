@@ -28,11 +28,6 @@ const RoutesSidebar = {
       label: "Gestionar usuarios",
       href: "/dashboard/users",
     },
-    {
-      icon: <UserIcon className="w-4 h-4" />,
-      label: "Gestionar usuarios",
-      href: "/dashboard/users",
-    },
   ],
   [RolesDB.ROLE_AUXILIAR]: [
     {
@@ -49,11 +44,6 @@ const RoutesSidebar = {
       icon: <ExclamationTriangleIcon className="w-4 h-4" />,
       label: "Problemas",
       href: "/dashboard/problems",
-    },
-    {
-      icon: <UserIcon className="w-4 h-4" />,
-      label: "Gestionar usuarios",
-      href: "/dashboard/users",
     },
   ],
 };
