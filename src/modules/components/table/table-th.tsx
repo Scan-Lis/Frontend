@@ -9,7 +9,7 @@ const TableTh = ({ children, ...props }: TableThProps) => (
   <th
     {...props}
     className={cn(
-      "px-6 py-4 font-medium text-gray-900 whitespace-nowrap",
+      "px-6 py-4 font-bold text-ultra-dark-blue whitespace-nowrap uppercase",
       props.className || ""
     )}
   >

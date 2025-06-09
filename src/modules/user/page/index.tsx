@@ -1,5 +1,5 @@
 import { UsersTable } from "../table";
-import { PlusIcon } from "@heroicons/react/20/solid";
+import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { useContextOpenModalId } from "@/context/use-context-open-modal";
 import { UsersEnumType } from "@/types/users-enum-type";
 import { CreateUserModal } from "../modals/create-user";
@@ -23,7 +23,7 @@ import { useState } from "react";
 
 const columns: ColumnDef<UserDataGet>[] = [
   { header: "Id", accessorKey: "id" },
-  { header: "Nombre", accessorKey: "nombre", cell: (info) => info.getValue() },
+  { header: "Nombre", accessorKey: "nombre" },
   { header: "Cédula", accessorKey: "cedula" },
   { header: "Correo", accessorKey: "correo" },
   { header: "Rol", accessorKey: "rol" },
@@ -79,13 +79,16 @@ const ModuleUserPage = () => {
         </button>
       </header>
       <div className="flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="Buscar por nombre o edad"
-          value={globalFilter}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          className="border p-1 mb-2"
-        />
+        <div className="font-semibold flex-1 flex items-center gap-2 bg-light-blue/35 py-2 px-4 rounded-md max-w-md">
+          <MagnifyingGlassIcon className="w-5 h-5 text-ultra-dark-blue/50" />
+          <input
+            type="text"
+            placeholder="Buscar por nombre o correo"
+            value={globalFilter}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            className="bg-transparent outline-none w-full placeholder:text-ultra-dark-blue/50 text-ultra-dark-blue/50"
+          />
+        </div>
         <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup) => (
