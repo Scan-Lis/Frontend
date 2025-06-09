@@ -35,10 +35,28 @@
   }
 }
 
+/* Para navegadores basados en Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* Cambia el ancho aquí */
+  height: 8px; /* Para scroll horizontal */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color); /* Usa tu color principal */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color de fondo de la pista */
+  border-radius: 4px;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin; /* Opciones: auto, thin, none */
+  scrollbar-color: var(--primary-color) #f1f1f1; /* thumb color track color */
 }
 
 .pattern_reportpage {

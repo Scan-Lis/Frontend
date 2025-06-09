@@ -1,18 +1,62 @@
-import { useGetUsers } from "@/hooks/useGetUsers";
 import { UsersTable } from "../table";
-import Pagination from "@/components/pagination";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useContextOpenModalId } from "@/context/use-context-open-modal";
 import { UsersEnumType } from "@/types/users-enum-type";
 import { CreateUserModal } from "../modals/create-user";
+import { useQuery } from "@tanstack/react-query";
+import { http } from "@/utils/http";
+import { UserDataGet } from "@/types/types";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getFilteredRowModel,
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+} from "@tanstack/react-table";
+import Table from "@/modules/components/table/table-wrapper";
+import { TableHead } from "@/modules/components/table/table-head";
+import { TableBody } from "@/modules/components/table/table-body";
+import { TableTh } from "@/modules/components/table/table-th";
+import { TableTd } from "@/modules/components/table/table-td";
+import { useState } from "react";
+
+const columns: ColumnDef<UserDataGet>[] = [
+  { header: "Id", accessorKey: "id" },
+  { header: "Nombre", accessorKey: "nombre", cell: (info) => info.getValue() },
+  { header: "Cédula", accessorKey: "cedula" },
+  { header: "Correo", accessorKey: "correo" },
+  { header: "Rol", accessorKey: "rol" },
+];
 
 const ModuleUserPage = () => {
-  const { data, loading, error, fetchUsers, totalPages, page, setPage } =
-    useGetUsers();
+  const { data, refetch, isLoading } = useQuery<UserDataGet[]>({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const response = await http.get("/user/all");
+      return response?.data?.content ?? [];
+    },
+  });
   const { setOpenModalId } = useContextOpenModalId();
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [globalFilter, setGlobalFilter] = useState("");
 
-  if (loading) {
-    return <div>Cargando...</div>;
+  const table = useReactTable({
+    data: data ?? [],
+    columns,
+    state: {
+      columnFilters,
+      globalFilter,
+    },
+    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    globalFilterFn: "includesString",
+  });
+
+  if (isLoading) {
+    return <div className="text-center">Cargando usuarios...</div>;
   }
 
   return (
@@ -35,14 +79,46 @@ const ModuleUserPage = () => {
         </button>
       </header>
       <div className="flex flex-col gap-4">
-        <UsersTable users={data} />
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          handlePage={setPage}
+        <input
+          type="text"
+          placeholder="Buscar por nombre o edad"
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          className="border p-1 mb-2"
         />
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableTh key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </TableTh>
+                ))}
+              </tr>
+            ))}
+          </TableHead>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableTd key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableTd>
+                ))}
+              </tr>
+            ))}
+          </TableBody>
+        </Table>
       </div>
-      <CreateUserModal fnCallback={() => fetchUsers(0)} />
+      <CreateUserModal
+        fnCallback={() => {
+          refetch();
+        }}
+      />
     </section>
   );
 };

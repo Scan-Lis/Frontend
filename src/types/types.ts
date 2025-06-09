@@ -112,13 +112,13 @@ export interface ObservationDataGet {
   problemaId: number;
 }
 
-export interface UserDataGet {
+export type UserDataGet = {
   id: number;
   nombre: string;
   cedula: string;
   correo: string;
   rol: "ADMIN" | "AUXILIAR";
-}
+};
 
 export interface UserDataPost {
   nombre: string;
@@ -126,4 +126,9 @@ export interface UserDataPost {
   correo: string;
   contrasena: string;
   rol: "ADMIN" | "AUXILIAR";
+}
+
+export interface ColumDefinition {
+  accessorKey: string;
+  header: string;
 }

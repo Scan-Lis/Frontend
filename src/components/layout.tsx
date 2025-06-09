@@ -27,30 +27,22 @@ const Layout = ({ children, className = "" }: LayoutProps) => {
     return null;
   }
 
-  // if (status === "authenticated") {
-  //   const isPermited = isRouteAuthorized(
-  //     session.user.rol as RolesDB,
-  //     router.pathname
-  //   );
-  //   if (!isPermited) {
-  //     router.push("/login");
-  //     return null;
-  //   }
-  // }
-
   const role = session.user.rol as RolesDB;
 
   return (
     <main
-      className={`relative p-8 h-screen flex gap-8 overflow-x-hidden ${className}`}>
+      className={`relative p-8 h-screen flex gap-8 overflow-x-hidden ${className}`}
+    >
       <Sidebar role={role} />
-      <aside className="flex-1 flex flex-col gap-2">
+      <aside className="flex-1 flex flex-col gap-2 h-full">
         <UserProfileInfo
           name={session.user.name as string}
           role={role}
           className="self-end h-fit"
         />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 h-full overflow-x-hidden overflow-y-auto pr-2">
+          {children}
+        </div>
       </aside>
     </main>
   );
