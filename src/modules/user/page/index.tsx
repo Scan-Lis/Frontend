@@ -1,4 +1,3 @@
-import { UsersTable } from "../table";
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { useContextOpenModalId } from "@/context/use-context-open-modal";
 import { UsersEnumType } from "@/types/users-enum-type";
@@ -20,13 +19,54 @@ import { TableBody } from "@/modules/components/table/table-body";
 import { TableTh } from "@/modules/components/table/table-th";
 import { TableTd } from "@/modules/components/table/table-td";
 import { useState } from "react";
+import Badge from "@/components/badge";
+import { UserActionsTable } from "../table/actions-table";
+import { DeleteUserModal } from "../modals/delete-user";
+import { UpdatePasswordModal } from "../modals/update-password";
+import { UpdateNameModal } from "../modals/update-name";
+import { UpdateEmailModal } from "../modals/update-email";
+
+const RoleColors: Record<"ADMIN" | "AUXILIAR", { bg: string; color: string }> =
+  {
+    ADMIN: {
+      bg: "#bbf7d0", // verde claro (bg-green-600/40)
+      color: "#16a34a", // verde (text-green-600)
+    },
+    AUXILIAR: {
+      bg: "#dbeafe", // azul claro (bg-light-blue/40)
+      color: "#3d5883", // azul oscuro (text-dark-blue)
+    },
+  };
 
 const columns: ColumnDef<UserDataGet>[] = [
   { header: "Id", accessorKey: "id" },
   { header: "Nombre", accessorKey: "nombre" },
   { header: "Cédula", accessorKey: "cedula" },
   { header: "Correo", accessorKey: "correo" },
-  { header: "Rol", accessorKey: "rol" },
+  {
+    header: "Rol",
+    accessorKey: "rol",
+    cell: ({ row }) => {
+      return (
+        <Badge
+          style={{
+            backgroundColor: RoleColors[row.original.rol].bg,
+            color: RoleColors[row.original.rol].color,
+          }}
+          className="min-w-[150px]"
+        >
+          {row.original.rol === "ADMIN" ? "Administrador" : "Auxiliar"}
+        </Badge>
+      );
+    },
+  },
+  {
+    header: "Acciones",
+    accessorKey: "acciones",
+    cell: ({ row }) => {
+      return <UserActionsTable props={row.original} />;
+    },
+  },
 ];
 
 const ModuleUserPage = () => {
@@ -118,6 +158,26 @@ const ModuleUserPage = () => {
         </Table>
       </div>
       <CreateUserModal
+        fnCallback={() => {
+          refetch();
+        }}
+      />
+      <DeleteUserModal
+        fnCallback={() => {
+          refetch();
+        }}
+      />
+      <UpdatePasswordModal
+        fnCallback={() => {
+          refetch();
+        }}
+      />
+      <UpdateNameModal
+        fnCallback={() => {
+          refetch();
+        }}
+      />
+      <UpdateEmailModal
         fnCallback={() => {
           refetch();
         }}

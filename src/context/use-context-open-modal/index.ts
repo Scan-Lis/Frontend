@@ -5,6 +5,7 @@ interface OpenModalIdContextProps {
   id: string;
   message: string;
   type: string | null;
+  extraData?: unknown;
 }
 
 const openModalIdContext = atom<OpenModalIdContextProps>({
@@ -23,6 +24,7 @@ const useContextOpenModalId = () => {
       id: "",
       message: "",
       type: null,
+      extraData: undefined,
     });
   };
   return { openModalId, setOpenModalId, handleCloseModal };

@@ -53,3 +53,91 @@ export const createUser = async (
     };
   }
 };
+
+export const deleteUser = async (
+  email: string
+): Promise<RequestResponse<void>> => {
+  try {
+    const normalizedEmail = encodeURI(email);
+    const response = await http.delete(
+      `/user/email/${normalizedEmail}?email=${normalizedEmail}`
+    );
+    return {
+      data: response.data,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al eliminar el usuario",
+      status: false,
+    };
+  }
+};
+
+export const updatePassword = async (
+  email: string,
+  newPassword: string
+): Promise<RequestResponse<void>> => {
+  try {
+    const url = `/user/admin/change-password?email=${email}&newPassword=${newPassword}`;
+    const normalizedUrl = encodeURI(url);
+    const response = await http.put(normalizedUrl);
+    return {
+      data: response.data,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al actualizar la contraseña",
+      status: false,
+    };
+  }
+};
+
+export const updateName = async (
+  email: string,
+  newName: string
+): Promise<RequestResponse<void>> => {
+  try {
+    const url = `/user/email/${email}/name/${newName}?email=${email}&newName=${newName}`;
+    const normalizedUrl = encodeURI(url);
+    const response = await http.put(normalizedUrl);
+    return {
+      data: response.data,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al eliminar el usuario",
+      status: false,
+    };
+  }
+};
+
+export const updateEmail = async (
+  email: string,
+  newEmail: string
+): Promise<RequestResponse<void>> => {
+  try {
+    const url = `/user/email/${email}/newEmail/${newEmail}?email=${email}&newEmail=${newEmail}`;
+    const normalizedUrl = encodeURI(url);
+    const response = await http.put(normalizedUrl);
+    return {
+      data: response.data,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al eliminar el usuario",
+      status: false,
+    };
+  }
+};
