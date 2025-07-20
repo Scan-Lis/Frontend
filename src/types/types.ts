@@ -40,6 +40,15 @@ export const SalasLabels = {
   [SalasDB.MovilLis]: "Móvil Lis",
 } as const;
 
+export const SalasOptions: { value: SalasDB; label: string }[] = [
+  { value: SalasDB.Sala1, label: "Sala 1" },
+  { value: SalasDB.Sala2, label: "Sala 2" },
+  { value: SalasDB.Sala3, label: "Sala 3" },
+  { value: SalasDB.Sala4, label: "Sala 4" },
+  { value: SalasDB.Telematica, label: "Telemática" },
+  { value: SalasDB.MovilLis, label: "Móvil Lis" },
+];
+
 export enum RolesDB {
   ROLE_ADMIN = "ROLE_ADMIN",
   ROLE_AUXILIAR = "ROLE_AUXILIAR",

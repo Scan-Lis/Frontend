@@ -2,10 +2,6 @@ import { cn } from "@/lib/utils";
 import {
   ArrowLeftEndOnRectangleIcon,
   Bars4Icon,
-  ComputerDesktopIcon,
-  DocumentTextIcon,
-  ExclamationTriangleIcon,
-  UserIcon,
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { useState } from "react";

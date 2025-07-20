@@ -40,7 +40,15 @@ const RoleColors: Record<"ADMIN" | "AUXILIAR", { bg: string; color: string }> =
 
 const columns: ColumnDef<UserDataGet>[] = [
   { header: "Id", accessorKey: "id" },
-  { header: "Nombre", accessorKey: "nombre" },
+  {
+    header: "Nombre",
+    accessorKey: "nombre",
+    cell: ({ row }) => (
+      <span className="capitalize">
+        {row.original.nombre.toLocaleLowerCase()}
+      </span>
+    ),
+  },
   { header: "Cédula", accessorKey: "cedula" },
   { header: "Correo", accessorKey: "correo" },
   {

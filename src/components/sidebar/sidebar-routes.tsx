@@ -28,6 +28,11 @@ const RoutesSidebar = {
       label: "Gestionar usuarios",
       href: "/dashboard/users",
     },
+    {
+      icon: <ComputerDesktopIcon className="w-4 h-4" />,
+      label: "Computadoras",
+      href: "/dashboard/computers",
+    },
   ],
   [RolesDB.ROLE_AUXILIAR]: [
     {
