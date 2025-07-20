@@ -25,6 +25,8 @@ import { DeleteUserModal } from "../modals/delete-user";
 import { UpdatePasswordModal } from "../modals/update-password";
 import { UpdateNameModal } from "../modals/update-name";
 import { UpdateEmailModal } from "../modals/update-email";
+import Pagination from "@/components/pagination";
+import usePagination from "@/hooks/usePagination";
 
 const RoleColors: Record<"ADMIN" | "AUXILIAR", { bg: string; color: string }> =
   {
@@ -78,33 +80,89 @@ const columns: ColumnDef<UserDataGet>[] = [
 ];
 
 const ModuleUserPage = () => {
-  const { data, refetch, isLoading } = useQuery<UserDataGet[]>({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const response = await http.get("/user/all");
-      return response?.data?.content ?? [];
-    },
-  });
   const { setOpenModalId } = useContextOpenModalId();
+  const { page, setPage, totalPages, setTotalPages } = usePagination();
+  const pageSize = 5;
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
+  const { data, refetch, isLoading, isError } = useQuery({
+    queryKey: ["users", page, pageSize], // Incluir página y tamaño en la clave
+    queryFn: async () => {
+      const response = await http.get(
+        `/user/all?page=${page}&size=${pageSize}`
+      );
+
+      // Actualizar el total de páginas basado en la respuesta del servidor
+      if (response?.data?.totalPages) {
+        setTotalPages(response.data.totalPages);
+      }
+
+      return {
+        users: response?.data?.content ?? [],
+        totalElements: response?.data?.totalElements ?? 0,
+        totalPages: response?.data?.totalPages ?? 1,
+        currentPage: response?.data?.number ?? 0,
+      };
+    },
+  });
+
   const table = useReactTable({
-    data: data ?? [],
+    data: data?.users ?? [],
     columns,
     state: {
       columnFilters,
       globalFilter,
+      pagination: {
+        pageIndex: page,
+        pageSize: pageSize,
+      },
     },
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: (updater) => {
+      if (typeof updater === "function") {
+        const newPaginationState = updater({ pageIndex: page, pageSize });
+        setPage(newPaginationState.pageIndex);
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    globalFilterFn: "includesString",
+    manualPagination: true, // Paginación manual del servidor
+    pageCount: totalPages, // Total de páginas del servidor
+    globalFilterFn: (row, columnId, filterValue) => {
+      if (!filterValue) return true;
+
+      const searchTerm = filterValue.toLowerCase();
+
+      // Obtener todos los valores de la fila
+      const rowValues = Object.entries(row.original)
+        .map(([key, value]) => {
+          // Si es la columna de rol, incluir tanto el valor original como el label
+          if (key === "rol" && value) {
+            const originalValue = String(value).toLowerCase();
+            const labelValue = value === "ADMIN" ? "administrador" : "auxiliar";
+            return [originalValue, labelValue].join(" ");
+          }
+          return String(value || "").toLowerCase();
+        })
+        .join(" ");
+
+      return rowValues.includes(searchTerm);
+    },
   });
 
   if (isLoading) {
-    return <div className="text-center">Cargando usuarios...</div>;
+    return (
+      <section className="flex flex-col">
+        <div className="text-center py-8">
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-dark-blue"></div>
+            <span className="ml-2 text-gray-600">Cargando usuarios...</span>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
@@ -153,17 +211,60 @@ const ModuleUserPage = () => {
             ))}
           </TableHead>
           <TableBody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableTd key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableTd>
-                ))}
+            {isLoading ? (
+              <tr>
+                <td colSpan={columns.length} className="text-center py-8">
+                  <div className="flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-dark-blue"></div>
+                    <span className="ml-2 text-gray-600">
+                      Cargando usuarios...
+                    </span>
+                  </div>
+                </td>
               </tr>
-            ))}
+            ) : isError ? (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="text-center py-8 text-red-600"
+                >
+                  Error al cargar los datos
+                </td>
+              </tr>
+            ) : table.getRowModel().rows.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="text-center py-8 text-gray-500"
+                >
+                  No se encontraron usuarios
+                </td>
+              </tr>
+            ) : (
+              table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableTd key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableTd>
+                  ))}
+                </tr>
+              ))
+            )}
           </TableBody>
         </Table>
+
+        {/* Componente de paginación */}
+        {!isLoading && totalPages > 1 && (
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            handlePage={setPage}
+          />
+        )}
       </div>
       <CreateUserModal
         fnCallback={() => {

@@ -122,7 +122,7 @@ export const getObservationsByProblemId = async ({
 }): Promise<RequestResponse<ObservationDataGet[]>> => {
   try {
     const response = await http.get(
-      `/problema/observaciones/${problemId}?page=${page}&size=${size}`
+      `/problema/observaciones/${problemId}?sort=fecha,desc`
     );
     return {
       data: response.data.content as ObservationDataGet[],

@@ -1,3 +1,4 @@
+import { SalasForm } from "@/constants";
 import { SalasDB } from "@/types/types";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 import QRCode from "qrcode";
@@ -13,7 +14,7 @@ const ButtonGenerateQR = ({ sala, numeroPc }: ButtonGenerateQRProps) => {
 
   // Route: /form-report/[salaId]/[pcId]
   const url = window.location.origin;
-  const qrCodeUrl = `${url}/form-report/${sala}/${numeroPc}`;
+  const qrCodeUrl = `${url}/form-report/${SalasForm[sala]}/${numeroPc}`;
 
   const generateAndDownloadQR = async () => {
     try {

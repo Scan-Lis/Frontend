@@ -6,7 +6,7 @@ const ProblemObservation = ({
   observation: ObservationDataGet;
 }) => {
   return (
-    <article className="text-dark-gray border border-gray-400/25 rounded-lg p-4 shadow-sm">
+    <article className="text-dark-gray w-[99%] border border-gray-400/25 rounded-lg p-4 shadow-sm">
       <div className="flex flex-col gap-1">
         <span className="font-semibold">Descripción: </span>
         <textarea

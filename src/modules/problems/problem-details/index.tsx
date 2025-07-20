@@ -31,12 +31,14 @@ const ProblemDetails = () => {
   }
 
   return (
-    <section className="flex flex-col">
-      <h1 className="font-bold text-2xl mb-4 text-dark-blue">
-        Detalles del problema
-      </h1>
-      <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-3 h-full overflow-hidden">
+      <header className="">
+        <h1 className="font-bold text-2xl mb-4 text-dark-blue">
+          Detalles del problema
+        </h1>
         <h2 className="font-bold text-lg text-dark-blue">Observaciones</h2>
+      </header>
+      <section className="flex flex-col flex-1 gap-4 overflow-y-auto">
         {observations.map((observation) => (
           <ProblemObservation key={observation.id} observation={observation} />
         ))}

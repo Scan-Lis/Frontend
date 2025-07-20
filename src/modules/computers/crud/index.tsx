@@ -56,7 +56,7 @@ const columns: ColumnDef<PcInfoBack>[] = [
 const ComputersCrudModule = () => {
   const { setOpenModalId } = useContextOpenModalId();
   const { page, setPage, totalPages, setTotalPages } = usePagination();
-  const pageSize = 5; // Puedes ajustar este valor según tus necesidades
+  const pageSize = 10;
   const [globalFilter, setGlobalFilter] = useState("");
 
   const { data, isLoading, isError, refetch } = useQuery({

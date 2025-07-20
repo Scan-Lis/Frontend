@@ -2,6 +2,7 @@ import WrapperInput from "@/components/wrapper-input";
 import { createReport } from "@/services/reports.service";
 import { ReportDataPost } from "@/types/types";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,9 +19,12 @@ interface FormReportData {
 }
 
 const FormReport = ({ pcId, salaId }: FormReportProps) => {
-  const { formState, register, handleSubmit } = useForm<FormReportData>();
+  const [loading, setLoading] = useState(false);
+  const { formState, register, handleSubmit, reset } =
+    useForm<FormReportData>();
 
   const handleSubmitForm = async (data: FormReportData) => {
+    setLoading(true);
     const dataToSend: ReportDataPost = {
       correo: data.email,
       tipo: data.type,
@@ -36,6 +40,8 @@ const FormReport = ({ pcId, salaId }: FormReportProps) => {
       return;
     }
     toast.success("Reporte enviado con éxito");
+    reset();
+    setLoading(false);
     return;
   };
 
@@ -96,10 +102,11 @@ const FormReport = ({ pcId, salaId }: FormReportProps) => {
           </p>
         )}
         <button
+          disabled={loading}
           type="submit"
-          className="flex gap-2 text-white font-semibold bg-dark-blue w-full justify-center items-center rounded-lg p-3"
+          className="flex gap-2 text-white font-semibold bg-dark-blue w-full justify-center items-center rounded-lg p-3 disabled:opacity-50 transition-all duration-300 hover:bg-dark-blue/80"
         >
-          Enviar
+          {loading && "Enviando..."}
           <PaperAirplaneIcon className="w-6 h-6 " />
         </button>
       </section>
