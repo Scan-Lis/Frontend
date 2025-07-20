@@ -40,6 +40,15 @@ export const SalasLabels = {
   [SalasDB.MovilLis]: "Móvil Lis",
 } as const;
 
+export const SalasOptions: { value: SalasDB; label: string }[] = [
+  { value: SalasDB.Sala1, label: "Sala 1" },
+  { value: SalasDB.Sala2, label: "Sala 2" },
+  { value: SalasDB.Sala3, label: "Sala 3" },
+  { value: SalasDB.Sala4, label: "Sala 4" },
+  { value: SalasDB.Telematica, label: "Telemática" },
+  { value: SalasDB.MovilLis, label: "Móvil Lis" },
+];
+
 export enum RolesDB {
   ROLE_ADMIN = "ROLE_ADMIN",
   ROLE_AUXILIAR = "ROLE_AUXILIAR",
@@ -85,4 +94,50 @@ export interface ReportDataGet {
   fecha: Date;
   sala: SalasDB;
   numeroPc: number;
+}
+
+export interface ProblemDataGet {
+  id: number;
+  descripcionBase: string;
+  solucionado: boolean;
+  fechaCreacion: Date;
+  fechaTerminacion: Date | null;
+  auxiliarAsignado: string | null;
+  sala: SalasDB;
+  numeroPc: number;
+}
+
+export interface SuspensiveDotsItems {
+  icon: JSX.Element;
+  title: string;
+  onClick: () => void;
+}
+
+export interface ObservationDataGet {
+  id: number;
+  descripcion: string;
+  fecha: string;
+  autor: string;
+  problemaId: number;
+}
+
+export type UserDataGet = {
+  id: number;
+  nombre: string;
+  cedula: string;
+  correo: string;
+  rol: "ADMIN" | "AUXILIAR";
+};
+
+export interface UserDataPost {
+  nombre: string;
+  cedula: string;
+  correo: string;
+  contrasena: string;
+  rol: "ADMIN" | "AUXILIAR";
+}
+
+export interface ColumDefinition {
+  accessorKey: string;
+  header: string;
 }

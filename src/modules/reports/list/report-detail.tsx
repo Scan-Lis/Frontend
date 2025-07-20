@@ -1,4 +1,5 @@
 import {
+  approveReport,
   deleteReport,
   updateStateStoreReport,
 } from "@/services/reports.service";
@@ -35,6 +36,14 @@ const ReportDetail = ({ report, closeModal }: ReportDetail) => {
       return;
     }
     toast.error(response.data as string);
+  };
+
+  const handleApprove = async (idReport: number, pcLabel: string) => {
+    const response = await approveReport({ idReport, pcLabel });
+    if (response.status) {
+      toast.success(response.data);
+      window.location.reload();
+    }
   };
 
   return (
@@ -82,7 +91,8 @@ const ReportDetail = ({ report, closeModal }: ReportDetail) => {
             </label>
             <button
               onClick={updateStore}
-              className="px-4 py-1 flex items-center gap-1 rounded-md bg-light-blue/40 text-dark-blue font-bold hover:bg-light-blue/30 transition-all text-xs">
+              className="px-4 py-1 flex items-center gap-1 rounded-md bg-light-blue/40 text-dark-blue font-bold hover:bg-light-blue/30 transition-all text-xs"
+            >
               Actualizar
             </button>
           </div>
@@ -93,11 +103,17 @@ const ReportDetail = ({ report, closeModal }: ReportDetail) => {
           onClick={() =>
             handleDelete(report.id, `${report.numeroPc} - ${report.sala}`)
           }
-          className="px-6 py-2 flex items-center gap-1 rounded-md bg-red-600/40 text-red-600 font-bold hover:bg-red-600/30 transition-all">
+          className="px-6 py-2 flex items-center gap-1 rounded-md bg-red-600/40 text-red-600 font-bold hover:bg-red-600/30 transition-all"
+        >
           <TrashIcon className="w-4 h-4" />
           Eliminar
         </button>
-        <button className="px-6 py-2 flex items-center gap-1 rounded-md bg-light-blue/40 text-dark-blue font-bold hover:bg-light-blue/30 transition-all">
+        <button
+          onClick={() =>
+            handleApprove(report.id, `${report.numeroPc} - ${report.sala}`)
+          }
+          className="px-6 py-2 flex items-center gap-1 rounded-md bg-light-blue/40 text-dark-blue font-bold hover:bg-light-blue/30 transition-all"
+        >
           <CheckIcon className="w-5 h-5" />
           Aprobar
         </button>

@@ -1,4 +1,4 @@
-import { PcInfoBack, RequestResponse } from "@/types/types";
+import { PcInfoBack, PcStateDB, RequestResponse, SalasDB } from "@/types/types";
 import { http } from "@/utils/http";
 import { AxiosError } from "axios";
 
@@ -78,9 +78,56 @@ export const getComputerByNumberAndRoom = async (
   } catch (error) {
     const err = error as AxiosError;
     const errMessage = err.response?.data as string;
-    console.log(err);
     return {
       data: errMessage || "Error al obtener el computador",
+      status: false,
+    };
+  }
+};
+
+export const createComputer = async ({
+  numeroPc,
+  sala,
+  estado,
+}: PcInfoBack): Promise<RequestResponse<PcInfoBack>> => {
+  try {
+    const response = await http.post("/computador", {
+      numeroPc,
+      sala,
+      estado,
+    });
+    return {
+      data: response.data,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al crear el computador",
+      status: false,
+    };
+  }
+};
+
+export const deleteComputer = async ({
+  sala,
+  numeroPc,
+}: {
+  sala: SalasDB;
+  numeroPc: number;
+}): Promise<RequestResponse<string>> => {
+  try {
+    await http.delete(`/computador/${sala}/${numeroPc}`);
+    return {
+      data: "Computador eliminado con éxito",
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al eliminar el computador",
       status: false,
     };
   }

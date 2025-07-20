@@ -43,8 +43,6 @@ const handler = NextAuth({
         session.user.rol = decoded.rol;
         session.user.email = decoded.jti.split("-")[1];
         session.user.name = decoded.sub;
-        console.log("Session --> ", session);
-        console.log("Decode --> ", decoded);
       }
       return session;
     },

@@ -9,11 +9,12 @@ const TableRow = ({ ...report }: ReportDataGet) => {
 
   return (
     <>
-      <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+      <tr className="odd:bg-white even:bg-gray-50 border-b">
         <td className="px-6 py-4">{report.id}</td>
         <th
           scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+        >
           {truncateText(report.descripcion, 20)}
         </th>
         <td className="px-6 py-4">{formatEmail(report.correo)}</td>
@@ -41,7 +42,8 @@ const TableRow = ({ ...report }: ReportDataGet) => {
         <td className="px-6 py-4">
           <button
             onClick={openModal}
-            className="flex gap-1 items-center text-dark-blue font-medium ">
+            className="flex gap-1 items-center text-dark-blue font-medium "
+          >
             Ver más
           </button>
         </td>

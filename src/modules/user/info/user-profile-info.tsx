@@ -12,14 +12,13 @@ const RoleColors = {
 };
 
 const UserProfileInfo = ({ className = "", role, name }: Props) => {
-  console.log(RolesDB[role]);
-
   return (
     <section className={`flex gap-4 h-fit ${className}`}>
       <div className="flex flex-col items-end text-dark-gray font-semibold">
         <h3>{name}</h3>
         <p
-          className={`text-[.8rem] w-fit py-1 px-3 rounded-full text-center ${RoleColors[role]}`}>
+          className={`text-[.8rem] w-fit py-1 px-3 rounded-full text-center ${RoleColors[role]}`}
+        >
           {RolesLabels[role]}
         </p>
       </div>

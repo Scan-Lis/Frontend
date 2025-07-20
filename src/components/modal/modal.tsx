@@ -1,4 +1,4 @@
-import { cn } from "@/utils/classnames";
+import { cn } from "@/lib/utils";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { ReactNode, useEffect } from "react";
 
