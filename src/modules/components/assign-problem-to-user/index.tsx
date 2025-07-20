@@ -54,7 +54,7 @@ const AssignProblemToUser = ({
     );
   }
 
-  return <div>{auxiliarAsignado}</div>;
+  return <div>{auxiliarAsignado ? auxiliarAsignado : "Sin asignar"}</div>;
 };
 
 export { AssignProblemToUser };

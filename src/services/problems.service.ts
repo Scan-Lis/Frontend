@@ -137,3 +137,29 @@ export const getObservationsByProblemId = async ({
     };
   }
 };
+
+export const assignProblemToAuxiliar = async ({
+  problemId,
+  auxiliarEmail,
+}: {
+  problemId: string;
+  auxiliarEmail: string;
+}): Promise<RequestResponse<ProblemDataGet>> => {
+  try {
+    const response = await http.post(`/problema/asignar`, {
+      id: problemId,
+      correoUsuario: auxiliarEmail,
+    });
+    return {
+      data: response.data as ProblemDataGet,
+      status: true,
+    };
+  } catch (error) {
+    const err = error as AxiosError;
+    const errMessage = err.response?.data as string;
+    return {
+      data: errMessage || "Error al asignar el problema al auxiliar",
+      status: false,
+    };
+  }
+};

@@ -17,7 +17,10 @@ export const getUsers = async ({
   }>
 > => {
   try {
-    const response = await http.get(`${url}?page=${page}&size=${size}`);
+    const urlFormatted = !size
+      ? `${url}?page=${page}`
+      : `${url}?page=${page}&size=${size}`;
+    const response = await http.get(urlFormatted);
     return {
       data: {
         users: response.data.content as UserDataGet[],
